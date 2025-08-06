@@ -24,20 +24,17 @@ public class Main {
             System.out.println(printArray(array));
             return array;
         }else{
-            int pivo= array[0];
-            boolean[] highestElements=new boolean[array.length];
+            int pivoIndex=(int)(Math.random()*(array.length-1));
+            int pivo= array[pivoIndex];
+            boolean[] isHighestElement=new boolean[array.length];
             int sizeTopArray=0;
-            boolean[] lowestElements=new boolean[array.length];
             int sizeBottomArray=0;
+
             for(int i=0;i<array.length; i++){
                 if(array[i]>pivo){
-                    highestElements[i]=true;
-                    lowestElements[i]=false;
+                    isHighestElement[i]=true;
                     sizeTopArray++;
-                }
-                if(array[i]<pivo){
-                    lowestElements[i]=true;
-                    highestElements[i]=false;
+                }else if(i!= pivoIndex){
                     sizeBottomArray++;
                 }
             }
@@ -48,35 +45,33 @@ public class Main {
             int bottomArrayIterator=0;
 
             for(int i=0;i<array.length;i++){
-                if(highestElements[i]==true){
+                if(isHighestElement[i]==true){
                     topArray[topArrayIterator]=array[i];
                     topArrayIterator++;
-                }
-                if(lowestElements[i]==true){
+                }else if(i!= pivoIndex){
                     bottomArray[bottomArrayIterator]=array[i];
                     bottomArrayIterator++;
                 }
             }
 
-            int[] sortBottom= quickSort(bottomArray);
-            int[] sortTop=quickSort(topArray);
+            bottomArray= quickSort(bottomArray);
+            topArray=quickSort(topArray);
 
             int[] result= new int[bottomArray.length+1+topArray.length];
             int resultIterator=0;
 
             for(int i=0;i<bottomArray.length;i++){
-                result[resultIterator]=sortBottom[i];
+                result[resultIterator] = bottomArray[i];
                 resultIterator++;
             }
             result[resultIterator]=pivo;
             resultIterator++;
             for(int i=0; i<topArray.length; i++){
-                result[resultIterator]=sortTop[i];
+                result[resultIterator] = topArray[i];
                 resultIterator++;
             }
             System.out.println("result: "+printArray(result));
             return result;
         }
-
     }
 }
