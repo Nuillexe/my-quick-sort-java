@@ -1,8 +1,7 @@
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner= new Scanner(System.in);
+
         int[] array={9,3,5,10,6,7,1,8,2};
         System.out.println("Array original: "+ printArray(array));
         array=quickSort(array);
@@ -12,11 +11,10 @@ public class Main {
 
     static String printArray(int[] array){
         String arrayInString="";
-        for(int i=0; i<array.length;i++){
-            arrayInString+=array[i]+", ";
+        for(int number: array){
+            arrayInString+=number+", ";
         }
         return arrayInString;
-
     }
 
     static int[] quickSort(int[] array){
@@ -30,26 +28,11 @@ public class Main {
             int[] bottomArray= quickSort( partition(array,pivo,pivoIndex)[0]);
             int[] topArray= quickSort( partition(array,pivo,pivoIndex)[1]);
 
-            int[] result= new int[bottomArray.length+1+topArray.length];
-            int resultIterator=0;
-
-            for(int i=0;i<bottomArray.length;i++){
-                result[resultIterator] = bottomArray[i];
-                resultIterator++;
-            }
-            result[resultIterator]=pivo;
-            resultIterator++;
-            for(int i=0; i<topArray.length; i++){
-                result[resultIterator] = topArray[i];
-                resultIterator++;
-            }
-            System.out.println("result: "+printArray(result));
-            return result;
+            return joinArrays(bottomArray,pivo,topArray);
         }
     }
 
     static int[][] partition(int[] array, int pivo,int pivoIndex){
-        int result[][]=new int[2][];
         boolean[] isHighestElement=new boolean[array.length];
         int sizeTopArray=0;
         int sizeBottomArray=0;
@@ -78,9 +61,24 @@ public class Main {
             }
         }
 
-        result[0]=bottomArray;
-        result[1]=topArray;
+        return new int[][] {bottomArray,topArray};
+    }
 
+    static int[] joinArrays( int[] bottomArray, int pivo, int[] topArray){
+        int[] result= new int[bottomArray.length+1+ topArray.length];
+        int resultIterator=0;
+
+        for(int i=0;i<bottomArray.length;i++){
+            result[resultIterator] = bottomArray[i];
+            resultIterator++;
+        }
+        result[resultIterator]=pivo;
+        resultIterator++;
+        for(int i=0; i<topArray.length; i++){
+            result[resultIterator] = topArray[i];
+            resultIterator++;
+        }
+        //System.out.println("result: "+printArray(result));  I used this printing for me watch the algorithm function in the minimun details
         return result;
     }
 }
