@@ -26,36 +26,9 @@ public class Main {
         }else{
             int pivoIndex=(int)(Math.random()*(array.length-1));
             int pivo= array[pivoIndex];
-            boolean[] isHighestElement=new boolean[array.length];
-            int sizeTopArray=0;
-            int sizeBottomArray=0;
 
-            for(int i=0;i<array.length; i++){
-                if(array[i]>pivo){
-                    isHighestElement[i]=true;
-                    sizeTopArray++;
-                }else if(i!= pivoIndex){
-                    sizeBottomArray++;
-                }
-            }
-
-            int[] topArray=new int[sizeTopArray];
-            int topArrayIterator=0;
-            int[] bottomArray=new int[sizeBottomArray];
-            int bottomArrayIterator=0;
-
-            for(int i=0;i<array.length;i++){
-                if(isHighestElement[i]==true){
-                    topArray[topArrayIterator]=array[i];
-                    topArrayIterator++;
-                }else if(i!= pivoIndex){
-                    bottomArray[bottomArrayIterator]=array[i];
-                    bottomArrayIterator++;
-                }
-            }
-
-            bottomArray= quickSort(bottomArray);
-            topArray=quickSort(topArray);
+            int[] bottomArray= quickSort( partition(array,pivo,pivoIndex)[0]);
+            int[] topArray= quickSort( partition(array,pivo,pivoIndex)[1]);
 
             int[] result= new int[bottomArray.length+1+topArray.length];
             int resultIterator=0;
@@ -73,5 +46,41 @@ public class Main {
             System.out.println("result: "+printArray(result));
             return result;
         }
+    }
+
+    static int[][] partition(int[] array, int pivo,int pivoIndex){
+        int result[][]=new int[2][];
+        boolean[] isHighestElement=new boolean[array.length];
+        int sizeTopArray=0;
+        int sizeBottomArray=0;
+
+        for(int i=0;i<array.length; i++){
+            if(array[i]>pivo){
+                isHighestElement[i]=true;
+                sizeTopArray++;
+            }else if(i!= pivoIndex){
+                sizeBottomArray++;
+            }
+        }
+
+        int[] topArray=new int[sizeTopArray];
+        int topArrayIterator=0;
+        int[] bottomArray=new int[sizeBottomArray];
+        int bottomArrayIterator=0;
+
+        for(int i=0;i<array.length;i++){
+            if(isHighestElement[i]==true){
+                topArray[topArrayIterator]=array[i];
+                topArrayIterator++;
+            }else if(i!= pivoIndex){
+                bottomArray[bottomArrayIterator]=array[i];
+                bottomArrayIterator++;
+            }
+        }
+
+        result[0]=bottomArray;
+        result[1]=topArray;
+
+        return result;
     }
 }
