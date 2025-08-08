@@ -1,20 +1,21 @@
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
 
         int[] array={9,3,5,10,6,7,1,8,2};
-        System.out.println("Array original: "+ printArray(array));
+        System.out.println("Array original: "+Arrays.toString(array));
         array=quickSort(array);
-        System.out.println("Sorted array:"+ printArray(array));
+        System.out.println("Sorted array:"+ Arrays.toString(array));
 
     }
 
     static String printArray(int[] array){
-        String arrayInString="";
-        for(int number: array){
-            arrayInString+=number+", ";
+        String[] strArray = new String[array.length];
+        for(int i=0; i<array.length;i++){
+            strArray[i]= String.valueOf(array[i]);
         }
-        return arrayInString;
+        return String.join(",",strArray);
     }
 
     static int[] quickSort(int[] array){
@@ -52,7 +53,7 @@ public class Main {
         int bottomArrayIterator=0;
 
         for(int i=0;i<array.length;i++){
-            if(isHighestElement[i]==true){
+            if(isHighestElement[i]){
                 topArray[topArrayIterator]=array[i];
                 topArrayIterator++;
             }else if(i!= pivoIndex){
@@ -68,17 +69,17 @@ public class Main {
         int[] result= new int[bottomArray.length+1+ topArray.length];
         int resultIterator=0;
 
-        for(int i=0;i<bottomArray.length;i++){
-            result[resultIterator] = bottomArray[i];
+        for(int bottomNumber: bottomArray){
+            result[resultIterator] = bottomNumber;
             resultIterator++;
         }
         result[resultIterator]=pivo;
         resultIterator++;
-        for(int i=0; i<topArray.length; i++){
-            result[resultIterator] = topArray[i];
+        for(int topNumber: topArray){
+            result[resultIterator] = topNumber;
             resultIterator++;
         }
-        //System.out.println("result: "+printArray(result));  I used this printing for me watch the algorithm function in the minimun details
+        System.out.println("result: "+printArray(result)); // I used this printing for me watch the algorithm function in the minimun details
         return result;
     }
 }
